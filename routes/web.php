@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +29,13 @@ Route::middleware('auth')->group(function () {
 
     // Rutas de Usuarios
     Route::resource('users', UserController::class);
+
+    // Rutas de Reportes
+    Route::prefix('reports')->name('reports.')->group(function () {
+        Route::get('/dashboard', [ReportController::class, 'dashboard'])->name('dashboard');
+        Route::get('/products', [ReportController::class, 'productReport'])->name('products');
+        Route::get('/stock', [ReportController::class, 'stockReport'])->name('stock');
+    });
 });
 
 // Incluir rutas de autenticación de Breeze
